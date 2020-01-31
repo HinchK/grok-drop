@@ -1,78 +1,93 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+## General Guidelines & Common Pitfalls
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+### Your .env file
 
-## About Laravel
+Make sure all of the values in your `.env` are single words with no spaces or special characters OR make sure they're enclosed in quotes. For example:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```
+MAIL_FROM_NAME=Snipe-IT Asset Management
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+will break things.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```
+MAIL_FROM_NAME='Snipe-IT Asset Management'
+```
 
-## Learning Laravel
+is safe.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Creating/editing database schema
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Migrations are the process through which all major frameworks (not just PHP) handle creating and modifying database schemas. This allows developers to make sure their schemas are in sync with each other (and staging/production).
 
-## Laravel Sponsors
+In Laravel, you create a migration by typing `php artisan make:migration name_of_your_migration`. You then edit that newly generated file, which lives in `database/migrations` and make the changes you need to make, whether that's creating a new table or modifying an existing table. 
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+The `up()` method in that migration file is where you put the Laravel code to create/modify tables, and the `down()` method is where you put the code to reverse it. For example, if you were creating a new table named `florms`, the `up()` method would contain the code to create the `florms` table, and the `down()` method would contain the code to drop that new table. Each migration should have an `up()` and a `down()`, and every `up()` should be reversible by the `down()`.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+Once you've written your `up()` code, save that file, then execute `php artisan migrate`. You'll see the migration get executed in the screen output. If you need to make a change to that migration before you commit, you can run `php artisan db:rollback` and reverse that migration, make your changes, and run `php artisan migrate` again. Once you're satisfied with your schema, you should commit and push that change.
 
-## Contributing
+When you execute `php artisan migrate`, Laravel will automatically populate the built-in `migrations` table to tell the application which migrations have already been run - which means a migration will never be run twice unless it throws an error while executing the migration. 
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+_Always use migrations, and never edit a database migration that has already been checked in and pushed_. 
 
-## Code of Conduct
+The reason for this is that if another developer has already pulled and run your migrations and you change a field type, field length, etc, they will have already executed your first schema change, so their schema will not match yours and things will break in bizarre and mysterious ways that will be difficult to debug. If you accidentally used the wrong field type, name, size, etc and need to change it, create a new migration and make the change there. 
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+## Base Composer Libraries
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+These are the standard libraries most Laravel projects *should* include. I say *should* because every project may be a little different. You can manually include these libraries once you've created your laravel project and run your initial `composer install`. 
 
-## License
+### Bare Minimum
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+composer require barryvdh/laravel-debugbar
+composer require laravel/tinker
+composer require watson/validating
+composer require --dev roave/security-advisories:dev-master
+
+```
+- `barryvdh/laravel-debugbar` is the most critical debugging tool we use
+- `laravel/tinker` allows you to interact with your app models, etc via a command line REPL tool
+- `watson/validating` provides model level validation. While not required for every project, I can't see why you wouldn't use it.
+- `roave/security-advisories` is a package that checks for known vulnerabilities in the packages you're trying to use or are currently using.
+
+### If you need/want an API
+
+```
+composer require laravel/passport
+```
+
+### If you're using authentication
+
+```
+composer require unicodeveloper/laravel-password
+composer require schuppo/password-strength
+```
+
+### If you're using email
+
+```
+composer require eduardokum/laravel-mail-auto-embed
+```
+
+`laravel-mail-auto-embed` just automatically embeds images like logos, etc in your HTML emails so they don't break if folks are behind a firewall or the app server isn't accessible.
+
+
+### If you're using file uploads
+
+```
+composer require enshrined/svg-sanitize
+composer require intervention/image
+```
+
+- `intervention/image` just gives you a really nice API for resizing and manipulating uploaded images
+- `enshrined/svg-sanitize` allows you to strip XSS from user uploaded SVG files and must be used if you allow users to upload files
+
+### Anything else
+
+When considering using a package that isn't well known, it's always a good idea to run it past the team - but things to look for are:
+
+- how recently has the package been updated?
+- what do their Github issues look like? Tons of open issues with no response? Dig deeper into the closed issues too - it could just be that there is a lot of activity, and they are still actively participating but the rate of new issues is higher than their close rate (which is fine - we just want to know they're still active)
+- Is the package trying to do too much or too little? Each new package is a new dependency and a new potential security issue. If the package just provides some syntactic sugar, you can probably skip it. If it's trying to do a million things, you probably *should* skip it, since if it becomes defunct, you've now based a lot of your functionality on some third-party package and you're gonna have a bad time. 
+
