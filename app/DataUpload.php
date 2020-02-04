@@ -10,8 +10,8 @@ class DataUpload extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'title',
         'site',
-        'data',
         'note'
     ];
 
