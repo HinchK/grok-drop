@@ -20,10 +20,6 @@ class CreateUploadFilesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
         });
     }
 
