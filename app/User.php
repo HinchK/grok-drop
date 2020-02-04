@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Symfony\Component\VarDumper\Cloner\Data;
 
 class User extends Authenticatable
 {
@@ -40,5 +41,10 @@ class User extends Authenticatable
     public function files()
     {
         return $this->hasMany(DataUpload::class);
+    }
+
+    public function uploads()
+    {
+        return $this->hasMany(UploadFile::class);
     }
 }
