@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDataUploadsTable extends Migration
+class CreateUploadFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateDataUploadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('data_uploads', function (Blueprint $table) {
+        Schema::create('upload_files', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id')->unsigned()->index();
-            $table->string('title');
-            $table->text('site');
-            $table->text('note');
-            $table->timestamps();
+            $table->string('filename');
             $table->softDeletes();
+            $table->timestamps();
+
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
@@ -35,6 +34,6 @@ class CreateDataUploadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('data_uploads');
+        Schema::dropIfExists('upload_files');
     }
 }
