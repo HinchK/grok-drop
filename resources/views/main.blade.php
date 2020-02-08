@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('content')
@@ -12,7 +11,7 @@
                     </a>
                 </li>
                 <li :class="{'is-active': isActive('audio')}" @click="getFiles('audio')">
-                    <a>
+                   <a>
                         <span class="icon is-small"><i class="fa fa-music"></i></span>
                         <span>Music</span>
                     </a>
@@ -113,6 +112,6 @@
                     </a>
                 </li>
             </ul>
-        </nav>x
+        </nav>
     </div>
 @endsection
