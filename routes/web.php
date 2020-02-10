@@ -20,9 +20,9 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::get('/', 'MainController@index')->name('home')->middleware('auth');
+Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/data/{type}/{id?}', 'DataUploadController@index');
 
 Route::post('data/add', 'DataUploadController@store');
 Route::post('data/edit/{id}', 'DataUploadController@edit');
-    Route::post('data/delete/{id}', 'DataController@destroy');
+Route::post('data/delete/{id}', 'DataController@destroy');
