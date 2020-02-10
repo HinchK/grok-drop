@@ -16,9 +16,9 @@ class CreateDataUploadsTable extends Migration
         Schema::create('data_uploads', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id')->unsigned()->index();
-            $table->string('title');
+            $table->string('title')->unique();
             $table->text('site');
-            $table->text('note');
+            $table->text('note')->default('APP_KEY=');
             $table->timestamps();
             $table->softDeletes();
         });
