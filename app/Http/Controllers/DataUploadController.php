@@ -59,7 +59,7 @@ you;
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required:max:255',
+            'title' => 'required|unique:files',
             'site' => 'required',
             'note' => 'required:max:255',
             'file' => 'required|file|mimes:' . DataUpload::getAllExtensions() . '|max:' . DataUpload::getMaxSize()
@@ -96,20 +96,20 @@ you;
     {
         $data = DataUpload::where('id', $id)->where('user_id', Auth::id())->first();
 
-        if ($data->name == $request['name']) {
+        if ($data->title == $request['title']) {
             return response()->json(false);
         }
 
         $this->validate($request, [
-            'name' => 'required|unique:files'
+            'title' => 'required|unique:files'
         ]);
 
-        $old_filename = $data->getName($data->type, $data->name, $data->extension);
-        $new_filename = $data->getName($request['type'], $request['name'], $request['extension']);
+        $old_filename = $data->getName($data->type, $data->title, $data->extension);
+        $new_filename = $data->getName($request['type'], $request['title'], $request['extension']);
 
         if (Storage::disk('local')->exists($old_filename)) {
             if (Storage::disk('local')->move($old_filename, $new_filename)) {
-                $data->name = $request['name'];
+                $data->title = $request['title'];
                 return response()->json($data->save());
             }
         }
@@ -127,8 +127,8 @@ you;
     {
         $data = DataUpload::findOrFail($id);
 
-        if (Storage::disk('local')->exists($data->getName($data->type, $data->name, $data->extension))) {
-            if (Storage::disk('local')->delete($data->getName($data->type, $data->name, $data->extension))) {
+        if (Storage::disk('local')->exists($data->getName($data->type, $data->title, $data->extension))) {
+            if (Storage::disk('local')->delete($data->getName($data->type, $data->title, $data->extension))) {
                 return response()->json($data->delete());
             }
         }
