@@ -18,7 +18,7 @@ class CreateDataUploadsTable extends Migration
             $table->integer('user_id')->unsigned()->index();
             $table->string('title')->unique();
             $table->text('site');
-            $table->text('note')->default('APP_KEY=');
+            $table->text('note');
             $table->timestamps();
             $table->softDeletes();
         });
