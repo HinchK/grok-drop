@@ -56,10 +56,8 @@ const app = new Vue({
         deletingFile: {},
         savedFile: {
             type: '',
-            title: '',
-            extension: '',
-            note: '',
-            site: ''
+            name: '',
+            extension: ''
         },
 
         notification: false,
@@ -84,7 +82,7 @@ const app = new Vue({
 
         fetchFile(type, page) {
             this.loading = true;
-            axios.get('files/' + type + '?page=' + page).then(result => {
+            axios.get('data/' + type + '?page=' + page).then(result => {
                 this.loading = false;
                 this.files = result.data.data.data;
                 console.log(this.files);
@@ -111,8 +109,10 @@ const app = new Vue({
             this.formData = new FormData();
             this.formData.append('name', this.fileName);
             this.formData.append('file', this.attachment);
+            this.formData.append('note', this.fileNote);
+            this.formData.append('site', this.fileSite);
 
-            axios.post('files/add', this.formData, {headers: {'Content-Type': 'multipart/form-data'}})
+            axios.post('data/add', this.formData, {headers: {'Content-Type': 'multipart/form-data'}})
                 .then(response => {
                     this.resetForm();
                     this.showNotification('File successfully upload!', true);
@@ -140,7 +140,7 @@ const app = new Vue({
         },
 
         deleteFile() {
-            axios.post('files/delete/' + this.deletingFile.id)
+            axios.post('data/delete/' + this.deletingFile.id)
                 .then(response => {
                     this.showNotification('File successfully deleted!', true);
                     this.fetchFile(this.activeTab, this.pagination.current_page);
@@ -169,7 +169,7 @@ const app = new Vue({
             formData.append('type', file.type);
             formData.append('extension', file.extension);
 
-            axios.post('files/edit/' + file.id, formData)
+            axios.post('data/edit/' + file.id, formData)
                 .then(response => {
                     if (response.data === true) {
                         this.showNotification('Filename successfully changed!', true);

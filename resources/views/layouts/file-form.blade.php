@@ -3,13 +3,13 @@
         <form id="new-file-form" action="#" method="#" @submit.prevent="submitForm">
             <div class="field is-grouped">
                 <p class="control is-expanded">
-                    <input class="input" type="text" name="title" placeholder="Data name" v-model="fileName" required>
+                    <input class="input" type="text" name="name" placeholder="Data name" v-model="fileName" required>
                 </p>
                 <p class="control is-expanded">
-                    <input class="input" type="text" name="note" placeholder=Note" v-model="fileName" required>
+                    <input class="input" type="text" name="note" placeholder=Note" v-model="fileNote" required>
                 </p>
                 <p class="control is-expanded">
-                    <input class="input" type="text" name="site" placeholder="Site name" v-model="fileName" required>
+                    <input class="input" type="text" name="site" placeholder="Site name" v-model="fileSitee" required>
                 </p>
                 <div class="file is-info has-name">
                     <label class="file-label">

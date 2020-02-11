@@ -14440,10 +14440,8 @@ var app = new Vue({
     deletingFile: {},
     savedFile: {
       type: '',
-      title: '',
-      extension: '',
-      note: '',
-      site: ''
+      name: '',
+      extension: ''
     },
     notification: false,
     showConfirm: false,
@@ -14491,6 +14489,8 @@ var app = new Vue({
       this.formData = new FormData();
       this.formData.append('name', this.fileName);
       this.formData.append('file', this.attachment);
+      this.formData.append('note', this.fileNote);
+      this.formData.append('site', this.fileSite);
       axios.post('files/add', this.formData, {
         headers: {
           'Content-Type': 'multipart/form-data'

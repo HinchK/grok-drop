@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class DataUpload extends Model
 {
     protected $fillable = [
-        'title',
+        'name',
         'site',
         'note',
         'type',

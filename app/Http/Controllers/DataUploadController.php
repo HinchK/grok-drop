@@ -59,7 +59,7 @@ you;
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|unique:files',
+            'name' => 'required|unique:files',
             'site' => 'required',
             'note' => 'required:max:255',
             'file' => 'required|file|mimes:' . DataUpload::getAllExtensions() . '|max:' . DataUpload::getMaxSize()
@@ -74,7 +74,7 @@ you;
         if ($data->upload($type, $uploaded_file, $request['name'], $original_ext))
         {
             return $data::create([
-                'title' => $request->get('title'),
+                'name' => $request->get('name'),
                 'site' => $request->get('site'),
                 'note' => $request->get('note'),
                 'type' => $type,
@@ -96,7 +96,7 @@ you;
     {
         $data = DataUpload::where('id', $id)->where('user_id', Auth::id())->first();
 
-        if ($data->title == $request['title']) {
+        if ($data->name == $request['name']) {
             return response()->json(false);
         }
 
@@ -105,11 +105,11 @@ you;
         ]);
 
         $old_filename = $data->getName($data->type, $data->title, $data->extension);
-        $new_filename = $data->getName($request['type'], $request['title'], $request['extension']);
+        $new_filename = $data->getName($request['type'], $request['name'], $request['extension']);
 
         if (Storage::disk('local')->exists($old_filename)) {
             if (Storage::disk('local')->move($old_filename, $new_filename)) {
-                $data->title = $request['title'];
+                $data->name = $request['name'];
                 return response()->json($data->save());
             }
         }
@@ -127,8 +127,8 @@ you;
     {
         $data = DataUpload::findOrFail($id);
 
-        if (Storage::disk('local')->exists($data->getName($data->type, $data->title, $data->extension))) {
-            if (Storage::disk('local')->delete($data->getName($data->type, $data->title, $data->extension))) {
+        if (Storage::disk('local')->exists($data->getName($data->type, $data->name, $data->extension))) {
+            if (Storage::disk('local')->delete($data->getName($data->type, $data->name, $data->extension))) {
                 return response()->json($data->delete());
             }
         }

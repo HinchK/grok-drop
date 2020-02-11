@@ -13,7 +13,7 @@
                 <li :class="{'is-active': isActive('audio')}" @click="getFiles('audio')">
                    <a>
                         <span class="icon is-small"><i class="fa fa-music"></i></span>
-                        <span>Music</span>
+                        <span>Audio</span>
                     </a>
                 </li>
                 <li :class="{'is-active': isActive('video')}" @click="getFiles('video')">
