@@ -14434,12 +14434,16 @@ var app = new Vue({
     formData: {},
     fileName: '',
     attachment: '',
+    fileNote: '',
+    fileSite: '',
     editingFile: {},
     deletingFile: {},
     savedFile: {
       type: '',
-      name: '',
-      extension: ''
+      title: '',
+      extension: '',
+      note: '',
+      site: ''
     },
     notification: false,
     showConfirm: false,
@@ -14596,6 +14600,8 @@ var app = new Vue({
       this.formData = {};
       this.fileName = '';
       this.attachment = '';
+      this.fileNote = '';
+      this.site = '';
     },
     anyError: function anyError() {
       return Object.keys(this.errors).length > 0;
@@ -14645,15 +14651,27 @@ var app = new Vue({
 
 /***/ }),
 
+/***/ "./resources/sass/font-awesome.scss":
+/*!******************************************!*\
+  !*** ./resources/sass/font-awesome.scss ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
-  \*************************************************************/
+/*!************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/font-awesome.scss ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! /Users/hinchk/grok-drop/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/hinchk/grok-drop/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/hinchk/grok-drop/resources/sass/app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! /Users/hinchk/grok-drop/resources/sass/font-awesome.scss */"./resources/sass/font-awesome.scss");
 
 
 /***/ })

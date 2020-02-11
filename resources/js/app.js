@@ -49,13 +49,17 @@ const app = new Vue({
         formData: {},
         fileName: '',
         attachment: '',
+        fileNote: '',
+        fileSite: '',
 
         editingFile: {},
         deletingFile: {},
         savedFile: {
             type: '',
-            name: '',
-            extension: ''
+            title: '',
+            extension: '',
+            note: '',
+            site: ''
         },
 
         notification: false,
@@ -218,6 +222,8 @@ const app = new Vue({
             this.formData = {};
             this.fileName = '';
             this.attachment = '';
+            this.fileNote = '';
+            this.site = '';
         },
 
         anyError() {
