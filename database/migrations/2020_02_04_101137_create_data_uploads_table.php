@@ -17,6 +17,8 @@ class CreateDataUploadsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id')->unsigned()->index();
             $table->string('name')->unique();
+            $table->string('type');
+            $table->string('extension');
             $table->text('site');
             $table->text('note');
             $table->timestamps();

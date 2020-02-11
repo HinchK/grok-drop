@@ -55,8 +55,8 @@
                         <div class="card-image">
                             <button class="delete delete-file" title="Delete" @click="prepareToDelete(file)"></button>
                             <figure class="image is-4by3" v-if="file.type == 'image'" @click="showModal(file)">
-                                <img v-if="file === editingFile" src=""  :src="'{{ asset('storage/' . Auth::user()->name . '_' . Auth::id()) }}' + '/' + savedFile.type + '/' + savedFile.name + '.' + savedFile.extension" :alt="file.name">
-                                <img v-if="file !== editingFile" src=""  :src="'{{ asset('storage/' . Auth::user()->name . '_' . Auth::id()) }}' + '/' + file.type + '/' + file.name + '.' + file.extension" :alt="file.name">
+                                <img v-if="file === editingFile" src=""  :src="'{{ asset('storage/' .  Auth::id()) }}' + '/' + savedFile.type + '/' + savedFile.name + '.' + savedFile.extension" :alt="file.name">
+                                <img v-if="file !== editingFile" src=""  :src="'{{ asset('storage/'. Auth::id()) }}' + '/' + file.type + '/' + file.name + '.' + file.extension" :alt="file.name">
                             </figure>
 
                             <div v-if="file.type == 'audio'">
@@ -64,14 +64,14 @@
                                     <img src="{{ asset('images/music.png') }}" alt="Audio image" id="audio_image">
                                 </figure>
                                 <audio controls>
-                                    <source src="" :src="'{{ asset('storage/' . Auth::user()->name . '_' . Auth::id()) }}' + '/' + file.type + '/' + file.name + '.' + file.extension" :type="'audio/' + file.extension">
+                                    <source src="" :src="'{{ asset('storage/' . Auth::id()) }}' + '/' + file.type + '/' + file.name + '.' + file.extension" :type="'audio/' + file.extension">
                                     Your browser does not support the audio tag.
                                 </audio>
                             </div>
 
                             <div v-if="file.type == 'video'" class="video_block">
                                 <video controls>
-                                    <source src="" :src="'{{ asset('storage/' . Auth::user()->name . '_' . Auth::id()) }}' + '/' + file.type + '/' + file.name + '.' + file.extension" :type="'video/' + file.extension">
+                                    <source src="" :src="'{{ asset('storage/' . Auth::id()) }}' + '/' + file.type + '/' + file.name + '.' + file.extension" :type="'video/' + file.extension">
                                     Your browser does not support the video tag.
                                 </video>
                             </div>
@@ -80,7 +80,7 @@
                                 <figure class="image is-4by3">
                                     <img src="{{ asset('images/document.png') }}" alt="Audio image" id="audio_image">
                                 </figure>
-                                <a class="button is-primary" href="" :href="'{{ asset('storage/' . Auth::user()->name . '_' . Auth::id()) }}' + '/' + file.type + '/' + file.name + '.' + file.extension" target="_blank">
+                                <a class="button is-primary" href="" :href="'{{ asset('storage/' . Auth::id()) }}' + '/' + file.type + '/' + file.name + '.' + file.extension" target="_blank">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     &nbsp;Download
                                 </a>

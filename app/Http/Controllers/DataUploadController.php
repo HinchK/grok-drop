@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataUpload;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class DataUploadController extends Controller
@@ -34,7 +35,6 @@ class DataUploadController extends Controller
             $files = $model::where('type', $type)
                 ->where('user_id', Auth::id())
                 ->orderBy('id', 'desc')->paginate($records_per_page);
-you;
             $response = [
                 'pagination' => [
                     'total' => $files->total(),
