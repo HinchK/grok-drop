@@ -1,4 +1,4 @@
-require('./bootstrap');
+// require('./bootstrap');
 
 
 /**
@@ -28,11 +28,11 @@ const app = new Vue({
     el: '#app',
 
     directives: {
-        'autofocus': {
-            inserted(el) {
-                el.focus();
+            'autofocus': {
+                inserted(el) {
+                    el.focus();
+                }
             }
-        }
     },
 
     data: {
