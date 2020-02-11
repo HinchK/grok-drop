@@ -14463,7 +14463,7 @@ var app = new Vue({
       var _this = this;
 
       this.loading = true;
-      axios.get('files/' + type + '?page=' + page).then(function (result) {
+      axios.get('data/' + type + '?page=' + page).then(function (result) {
         _this.loading = false;
         _this.files = result.data.data.data;
         console.log(_this.files);
@@ -14491,7 +14491,7 @@ var app = new Vue({
       this.formData.append('file', this.attachment);
       this.formData.append('note', this.fileNote);
       this.formData.append('site', this.fileSite);
-      axios.post('files/add', this.formData, {
+      axios.post('data/add', this.formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -14523,7 +14523,7 @@ var app = new Vue({
     deleteFile: function deleteFile() {
       var _this3 = this;
 
-      axios.post('files/delete/' + this.deletingFile.id).then(function (response) {
+      axios.post('data/delete/' + this.deletingFile.id).then(function (response) {
         _this3.showNotification('File successfully deleted!', true);
 
         _this3.fetchFile(_this3.activeTab, _this3.pagination.current_page);
@@ -14550,7 +14550,7 @@ var app = new Vue({
       formData.append('name', file.name);
       formData.append('type', file.type);
       formData.append('extension', file.extension);
-      axios.post('files/edit/' + file.id, formData).then(function (response) {
+      axios.post('data/edit/' + file.id, formData).then(function (response) {
         if (response.data === true) {
           _this4.showNotification('Filename successfully changed!', true);
 
